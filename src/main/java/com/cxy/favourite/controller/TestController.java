@@ -18,6 +18,9 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.web.bind.annotation.*;
 
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -165,4 +168,39 @@ private UserRepository userRepository;
         return chunk;
         }
 
+        /*测试Springmvc参数绑定*/
+      //@PathVariable
+        @RequestMapping("/testUrlPathParam/{param1}/{param2}")
+        public void testUrlPathParam(HttpServletRequest request, @PathVariable("param1") String param1,
+                                     @PathVariable("param1")String param2) {
+            System.out.println("通过PathVariable获取的参数param1=" + param1);
+            System.out.println("通过PathVariable获取的参数param2=" + param2);
+        }
+
+    @RequestMapping("/testHeaderParam")
+    public void testHeaderParam(HttpServletRequest request, @RequestHeader("param") String param) {
+        System.out.println("通过PathVariable获取的参数param=" + param);
+    }
+
+
+    /**
+     * 在
+     */
+    @RequestMapping("/testCookieParam")
+    public void testCookieParam(
+                                HttpServletResponse response,
+                                @CookieValue(value = "cxyId",defaultValue = "cxy") String cxyId,
+                                @RequestParam(value = "key", defaultValue = "key") String key,
+                                @RequestParam(value = "value", defaultValue = "value") String value
+                                ) {
+
+        response.addCookie(new Cookie(key,value));
+        System.out.println("通过CookieValue获取的参数" + cxyId);//通过CookieValue获取的参数cxy
+    }
+
+
+    @RequestMapping("/testBodyParam")
+    public void testBodyParam(@RequestBody String value) {
+        System.out.println("通过RequestBody获取的参数" + value);//通过RequestBody获取的参数cxxas
+    }
 }
