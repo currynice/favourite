@@ -81,27 +81,5 @@ public class PassportInterceptor implements HandlerInterceptor {
     }
 
 
-    private boolean isAjaxResponse(HttpServletRequest request,
-                                   HttpServletResponse response) throws IOException {
 
-
-        // ajax请求
-        /**
-         * 判断是否已经踢出
-         * 1.如果是Ajax 访问，那么给予json返回值提示。
-         * 2.如果是普通请求，直接跳转到登录页
-         */
-        //判断是不是Ajax请求
-
-        if (FilterUtils.isAjax(request) ) {
-            log.debug(getClass().getName()+ "，当前用户的信息或权限已变更，重新登录后生效！");
-            ResponseData result = new ResponseData(ExceptionEnums.BACKLOGIN);
-            FilterUtils.out(response, result);
-        }else{
-            // 重定向
-            WebUtils.issueRedirect(request, response, KICKOUTURL);//shiro TODO
-
-        }
-        return false;
-    }
 }
