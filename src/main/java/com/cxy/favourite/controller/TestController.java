@@ -3,6 +3,7 @@ package com.cxy.favourite.controller;
 import com.cxy.favourite.common.aop.LogManage;
 import com.cxy.favourite.domain.News;
 import com.cxy.favourite.domain.User;
+import com.cxy.favourite.domain.annotation.CurrentUser;
 import com.cxy.favourite.domain.dto.PageChunk;
 import com.cxy.favourite.domain.dto.projection.UserProjection;
 import com.cxy.favourite.jpa.NewsRepository;
@@ -11,12 +12,8 @@ import com.cxy.favourite.jpa.specification.SpecificationFactory;
 import com.cxy.favourite.service.NewsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.web.bind.annotation.*;
-
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -203,4 +200,16 @@ private UserRepository userRepository;
     public void testBodyParam(@RequestBody String value) {
         System.out.println("通过RequestBody获取的参数" + value);//通过RequestBody获取的参数cxxas
     }
+
+    /**
+     * 自定义参数绑定 annotation:CurrentUser
+     */
+    @RequestMapping(value = "userInfo",method = RequestMethod.GET)
+    public Map<String,String> userInfo(@CurrentUser(required=true)User user){
+        Map<String,String> map = new HashMap<>();
+        map.put("name",user.getUserName());
+        map.put("email",user.getEmail());
+        return map;
+    }
+
 }
