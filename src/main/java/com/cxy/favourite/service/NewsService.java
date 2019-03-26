@@ -32,6 +32,19 @@ public class NewsService {
         return pageChunk;
     }
 
+    /**
+     * 最新新闻随便看看
+     * @param page
+     * @return
+     */
+    public Page<News> getLatest(Integer page,Integer size){
+
+        Pageable pageable = PageRequest.of((page==null?0:page),size, Sort.by(Sort.Direction.DESC,"id"));
+        Page<News> result = this.newsRepository.selectByOffset(pageable);
+
+        return result;
+    }
+
     //添加新闻
     public void  addNews(News news){
         newsRepository.save(news);

@@ -2,26 +2,28 @@ package com.cxy.favourite.web;
 
 import com.cxy.favourite.common.aop.LogManage;
 import com.cxy.favourite.domain.HostHolder;
-import com.cxy.favourite.domain.User;
+import com.cxy.favourite.domain.News;
+import com.cxy.favourite.domain.ViewObject;
 import com.cxy.favourite.jpa.UserRepository;
+import com.cxy.favourite.service.NewsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.HttpServletRequest;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("/")
 public class IndexController extends BaseController {
     @Autowired
     private UserRepository userRepository;
-
+    @Autowired
+    NewsService newsService;
     @Autowired
     private HostHolder hostHolder;
 
@@ -79,4 +81,21 @@ public class IndexController extends BaseController {
 
         return "/favourite/chat";
     }
+
+    /**
+     * 随便看看 标准模式显示(新闻+用户组合输出) //TODO 3.27
+     *
+     */
+    @RequestMapping(value = "/lookAround")
+    @LogManage(description = "随便看看")
+    public String lookAroundStandard(Model model, @RequestParam(value = "page",defaultValue = "0")Integer page,
+                                     @RequestParam(value = "size",defaultValue = "10")Integer size){
+        Page<News> result = this.newsService.getLatest(page,size);
+
+        //资讯+用户
+        List<ViewObject> vos = new ArrayList<>();
+
+        return "lookAround/standard";
+    }
+
 }
