@@ -6,6 +6,7 @@ import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import com.cxy.favourite.interceptor.PassportInterceptor;
 import com.cxy.favourite.resolver.CurrentUserHandlerMethodArgumentResolver;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.stereotype.Component;
@@ -14,6 +15,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -59,7 +61,7 @@ public class MyWebMvcConfig  implements WebMvcConfigurer {
      */
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters){
-        //FastJson消息转换器
+//        //FastJson消息转换器
         FastJsonHttpMessageConverter converter = new FastJsonHttpMessageConverter();
         //配置
         FastJsonConfig config = new FastJsonConfig();
@@ -78,20 +80,39 @@ public class MyWebMvcConfig  implements WebMvcConfigurer {
                 SerializerFeature.WriteNullNumberAsZero  // Number null -> 0
 
         );
+
+
+
        // config.setDateFormat("");
         // config.setDateFormat("yyyy-MM-dd HH:mm:ss");
+
         converter.setFastJsonConfig(config);//配置生效
-//        converters.add(fastJsonHttpMessageConverter);//添加到转换器list 验证后再加
 
 
 
-//        List<MediaType> list = new ArrayList<>();
-//        list.add(MediaType.APPLICATION_JSON_UTF8);
-//        list.add(MediaType.APPLICATION_XML);
-//        list.add(MediaType.TEXT_XML);
-//        list.add(MediaType.TEXT_PLAIN);
-//        list.add(MediaType.TEXT_EVENT_STREAM);
-//        converter.setSupportedMediaTypes(list);
+
+        //解决java.lang.IllegalArgumentException: 'Content-Type' cannot contain wildcard type '*'异常
+        List<MediaType> list = new ArrayList<>();
+        list.add(MediaType.APPLICATION_JSON);
+        list.add(MediaType.APPLICATION_JSON_UTF8);
+        list.add(MediaType.APPLICATION_ATOM_XML);
+        list.add(MediaType.APPLICATION_FORM_URLENCODED);
+        list.add(MediaType.APPLICATION_OCTET_STREAM);
+        list.add(MediaType.APPLICATION_PDF);
+        list.add(MediaType.APPLICATION_RSS_XML);
+        list.add(MediaType.APPLICATION_XHTML_XML);
+        list.add(MediaType.APPLICATION_XML);
+        list.add(MediaType.IMAGE_GIF);
+        list.add(MediaType.IMAGE_JPEG);
+        list.add(MediaType.IMAGE_PNG);
+        list.add(MediaType.TEXT_EVENT_STREAM);
+        list.add(MediaType.TEXT_HTML);
+        list.add(MediaType.TEXT_MARKDOWN);
+        list.add(MediaType.TEXT_PLAIN);
+        list.add(MediaType.TEXT_XML);
+        converter.setSupportedMediaTypes(list);
+
+
        converter.setDefaultCharset(Charset.forName("UTF-8"));
         for(int i=0;i<converters.size();i++){
             if(converters.get(i) instanceof MappingJackson2HttpMessageConverter){
