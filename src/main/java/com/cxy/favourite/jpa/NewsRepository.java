@@ -9,8 +9,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
 /**
  * NewsJpa
  */
@@ -52,4 +50,13 @@ public interface NewsRepository extends BaseRepository<News,Long> {
      */
     @Query(value = "select n from News  n where userId = :userId ")
     Page<News> selectByUserIdAndOffset(@Param("userId") Long userId, Pageable pageable);
+
+    /**
+     * 分页查询Nesw selectByOffset
+     * order by id desc
+     * @param pageable
+     * @return
+     */
+    @Query(value = "select n from News  n ")
+    Page<News> selectByOffset( Pageable pageable);
 }
