@@ -6,6 +6,6 @@ public class Test {
         User user1 = new User("CXY",22);
         User user2 = new User("wang",22);
         System.out.println("1>>>" + user1);
-        System.out.println("2>>>" + user2);//
+        System.out.println("2>>>" + user2);////
     }
 }
