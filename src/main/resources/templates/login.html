@@ -34,6 +34,9 @@
                         <span class="fa fa-lock form-control-feedback text-muted"></span>
                     </div>
                     <div class="clearfix">
+
+                            <input id="rememberMe" type="checkbox"  v-model="rememberMe"  /> 记住我
+
                         <div class="pull-right">
                             <a href="/forgotPassword" class="text-muted">忘记密码？</a>
                         </div>
@@ -68,7 +71,8 @@
     var loginPage = new Vue({
         el: '#loginPage',
         data:{'userName':'',
-            'password': ''
+            'password': '',
+            'rememberMe':''
         },
         methods:{
             login:function(){
@@ -76,9 +80,15 @@
                 if(!ok){
                     return;
                 }
+                var check ;
+                if(this.rememberMe== true){
+                    check=1;
+                }
+
                 var datas={
                     userName: this.username,
-                    password: this.password
+                    password: this.password,
+                    rememberMe:check
                 };
 
                 this.$http.post('/user/login',datas).then(function(response){

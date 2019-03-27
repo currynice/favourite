@@ -4,9 +4,7 @@ package com.cxy.favourite.web;
 import com.cxy.favourite.common.Const;
 import com.cxy.favourite.common.aop.LogManage;
 import com.cxy.favourite.domain.HostHolder;
-import com.cxy.favourite.domain.LoginTicket;
 import com.cxy.favourite.domain.User;
-import com.cxy.favourite.domain.dto.PageChunk;
 import com.cxy.favourite.domain.enums.ExceptionEnums;
 import com.cxy.favourite.domain.result.Response;
 import com.cxy.favourite.domain.result.ResponseData;
@@ -19,14 +17,11 @@ import net.sf.oval.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Base64;
 import java.util.List;
-import java.util.UUID;
 
 @Controller
 @RequestMapping ("/user")
@@ -43,7 +38,7 @@ public class UserController extends BaseController{
     @Autowired
     private HostHolder hostHolder;
 
-    //TODO 记住登录+上次浏览
+    //TODO 上次浏览
     @ResponseBody
     @RequestMapping(value="/login",method = RequestMethod.POST)
     @LogManage(description = "登录")
@@ -59,12 +54,14 @@ public class UserController extends BaseController{
 
             }
                String ticket = loginTicketService.addLoginTicket(emailOrUserNameUser.getId());
+
             if(ticket!=null){
                 Cookie cookie = new Cookie(Const.LOGIN_TICKET,ticket);
                 cookie.setPath("/");
                 // TODO 记住我
-                if(rememberMe.equals(1)){
+                if(rememberMe.toString().equals("1")){
                     cookie.setMaxAge(Const.COOKIE_TIMEOUT);
+
                 }
                  response.addCookie(cookie);
             }
