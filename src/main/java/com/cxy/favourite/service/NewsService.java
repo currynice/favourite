@@ -1,6 +1,7 @@
 package com.cxy.favourite.service;
 
 import com.cxy.favourite.domain.News;
+import com.cxy.favourite.domain.UserIsFollow;
 import com.cxy.favourite.domain.dto.PageChunk;
 import com.cxy.favourite.jpa.NewsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  *新闻Service
@@ -32,18 +35,9 @@ public class NewsService {
         return pageChunk;
     }
 
-    /**
-     * 最新新闻随便看看
-     * @param page
-     * @return
-     */
-    public Page<News> getLatest(Integer page,Integer size){
 
-        Pageable pageable = PageRequest.of((page==null?0:page),size, Sort.by(Sort.Direction.DESC,"id"));
-        Page<News> result = this.newsRepository.selectByOffset(pageable);
 
-        return result;
-    }
+
 
     //添加新闻
     public void  addNews(News news){

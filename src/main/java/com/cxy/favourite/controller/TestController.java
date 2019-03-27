@@ -3,17 +3,21 @@ package com.cxy.favourite.controller;
 import com.cxy.favourite.common.aop.LogManage;
 import com.cxy.favourite.domain.News;
 import com.cxy.favourite.domain.User;
+import com.cxy.favourite.domain.ViewObject;
 import com.cxy.favourite.domain.annotation.CurrentUser;
 import com.cxy.favourite.domain.dto.PageChunk;
 import com.cxy.favourite.domain.dto.projection.UserProjection;
 import com.cxy.favourite.jpa.NewsRepository;
 import com.cxy.favourite.jpa.UserRepository;
 import com.cxy.favourite.jpa.specification.SpecificationFactory;
+import com.cxy.favourite.service.LookAroundService;
 import com.cxy.favourite.service.NewsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -37,6 +41,9 @@ private UserRepository userRepository;
 
     @Autowired
     private NewsService newsService;
+
+    @Autowired
+    private LookAroundService lookAroundService;
     /**
      * 查询用户列表方法
      *
@@ -211,5 +218,7 @@ private UserRepository userRepository;
         map.put("email",user.getEmail());
         return map;
     }
+
+
 
 }

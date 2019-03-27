@@ -74,19 +74,19 @@ public class MyWebMvcConfig  implements WebMvcConfigurer {
          * WriteMapNullValue：是否输出值为null的字段,默认为false。
 
          */
-        config.setSerializerFeatures(
-                SerializerFeature.WriteMapNullValue, // 保留输出null的字段
-                SerializerFeature.WriteNullStringAsEmpty, // String null -> ""
-                SerializerFeature.WriteNullNumberAsZero  // Number null -> 0
-
-        );
+//        config.setSerializerFeatures(
+//                SerializerFeature.WriteMapNullValue, // 保留输出null的字段
+//                SerializerFeature.WriteNullStringAsEmpty, // String null -> ""
+//                SerializerFeature.WriteNullNumberAsZero  // Number null -> 0
+//
+//        );
 
 
 
        // config.setDateFormat("");
         // config.setDateFormat("yyyy-MM-dd HH:mm:ss");
 
-        converter.setFastJsonConfig(config);//配置生效
+       // converter.setFastJsonConfig(config);//配置生效  TODO
 
 
 

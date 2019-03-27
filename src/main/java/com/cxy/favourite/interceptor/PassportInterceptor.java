@@ -70,7 +70,7 @@ public class PassportInterceptor implements HandlerInterceptor {
     /*渲染之前 每个页面添加user*/
     @Override
     public  void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, @Nullable ModelAndView modelAndView) throws Exception {
-            if(modelAndView!=null&&hostHolder.getUser()!=null){
+            if(modelAndView!=null && hostHolder.getUser()!=null){
             modelAndView.addObject("user",hostHolder.getUser());
         }
 

@@ -4,7 +4,9 @@ import com.cxy.favourite.common.aop.LogManage;
 import com.cxy.favourite.domain.HostHolder;
 import com.cxy.favourite.domain.News;
 import com.cxy.favourite.domain.ViewObject;
+import com.cxy.favourite.domain.view.NewsSummary;
 import com.cxy.favourite.jpa.UserRepository;
+import com.cxy.favourite.service.LookAroundService;
 import com.cxy.favourite.service.NewsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -26,6 +28,9 @@ public class IndexController extends BaseController {
     NewsService newsService;
     @Autowired
     private HostHolder hostHolder;
+    @Autowired
+    private LookAroundService lookAroundService;
+
 
     @RequestMapping(value ={"/index","/"},method = RequestMethod.GET)
     @LogManage(description = "首页")
@@ -88,14 +93,15 @@ public class IndexController extends BaseController {
      */
     @RequestMapping(value = "/lookAround")
     @LogManage(description = "随便看看")
-    public String lookAroundStandard(Model model, @RequestParam(value = "page",defaultValue = "0")Integer page,
+    public String  lookAroundStandard(Model model, @RequestParam(value = "page",defaultValue = "0")Integer page,
                                      @RequestParam(value = "size",defaultValue = "10")Integer size){
-        Page<News> result = this.newsService.getLatest(page,size);
+        List<NewsSummary> summaries = this.lookAroundService.getLatestNewsAndUser(page,size);
 
-        //资讯+用户
-        List<ViewObject> vos = new ArrayList<>();
-
+        model.addAttribute("type", "lookAround");
+        model.addAttribute("newsSummaries",summaries);
+        model.addAttribute("size",summaries.size());
         return "lookAround/standard";
+
     }
 
 }

@@ -35,7 +35,7 @@ public class NewsController extends BaseController{
      * 发布资讯
      * @param image
      * @param title
-     * @param link
+     * @param content
      * @return
      */
     @RequestMapping(path = {"/user/addNews"}, method = {RequestMethod.POST})
@@ -43,7 +43,7 @@ public class NewsController extends BaseController{
     @ResponseBody
     public Response addNews(@RequestParam("image") String image,
                             @RequestParam("title") String title,
-                            @RequestParam("link") String link) {
+                            @RequestParam("content") String content) {
         try {
             News news = new News();
             news.setCreatedDate(DateUtils.getCurrentTime());
@@ -51,7 +51,7 @@ public class NewsController extends BaseController{
             news.setImage(image);
             news.setCommentCount(0);
             news.setLikeCount(0);
-            news.setLink(link);
+            news.setContent(content);
             news.setUserId(super.getUserId());
             newsService.addNews(news);
             //TODO

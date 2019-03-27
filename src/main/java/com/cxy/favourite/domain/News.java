@@ -18,7 +18,7 @@ public class News extends Entitys implements Serializable {
     @Column(nullable = false)
     private String title;
     @Column(nullable = false)
-    private String link;
+    private String content;
     @Column(nullable = true)
     private String image;//图片
     @Column(nullable = false)
@@ -33,9 +33,9 @@ public class News extends Entitys implements Serializable {
     public News(){
         super();
     }
-    public News(String title, String link, String image, Integer likeCount, Integer commentCount, Long createdDate, Long userId) {
+    public News(String title, String content, String image, Integer likeCount, Integer commentCount, Long createdDate, Long userId) {
         this.title = title;
-        this.link = link;
+        this.content = content;
         this.image = image;
         this.likeCount = likeCount;
         this.commentCount = commentCount;
@@ -59,12 +59,12 @@ public class News extends Entitys implements Serializable {
         this.title = title;
     }
 
-    public String getLink() {
-        return link;
+    public String getContent() {
+        return content;
     }
 
-    public void setLink(String link) {
-        this.link = link;
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public String getImage() {

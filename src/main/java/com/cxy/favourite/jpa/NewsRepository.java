@@ -1,6 +1,7 @@
 package com.cxy.favourite.jpa;
 
 import com.cxy.favourite.domain.News;
+import com.cxy.favourite.domain.view.NewsView;
 import com.cxy.favourite.jpa.base.BaseRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,6 +14,12 @@ import org.springframework.transaction.annotation.Transactional;
  * NewsJpa
  */
 public interface NewsRepository extends BaseRepository<News,Long> {
+    //TODO 补充分类，针对个人的信息
+     String  baseSql="select n.id as id,n.title as title ,n.content as content,n.createdDate as createdDate," +
+            "n.userId as userId,n.commentCount as commentCount,n.likeCount as likeCount," +
+            "n.image as image," +
+            "u.userName as userName,u.myPicture as myPicture " +
+            "from News n,User u WHERE n.userId=u.id";
 
     @Override
     News save(News news);
@@ -51,12 +58,13 @@ public interface NewsRepository extends BaseRepository<News,Long> {
     @Query(value = "select n from News  n where userId = :userId ")
     Page<News> selectByUserIdAndOffset(@Param("userId") Long userId, Pageable pageable);
 
+
     /**
-     * 分页查询Nesw selectByOffset
+     * 随便看看Nesw selectByOffset //TODO 加上分类
      * order by id desc
      * @param pageable
      * @return
      */
-    @Query(value = "select n from News  n ")
-    Page<News> selectByOffset( Pageable pageable);
+    @Query(value = baseSql)
+    Page<NewsView> selectByOffset(Pageable pageable);
 }
