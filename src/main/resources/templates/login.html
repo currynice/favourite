@@ -26,6 +26,7 @@
                 <p class="text-center pv">请登录</p>
                 <form id="form" data-parsley-validate="true" onsubmit="return false">
                     <div class="form-group has-feedback">
+                        <input type="hidden" name="next" th:value="${next}"/>
                         <input type="text" placeholder="邮箱地址或昵称" v-model="username" class="form-control" data-parsley-error-message="请输入邮箱地址或昵称" required="required" />
                         <span class="fa fa-envelope form-control-feedback text-muted"></span>
                     </div>
@@ -72,7 +73,8 @@
         el: '#loginPage',
         data:{'userName':'',
             'password': '',
-            'rememberMe':''
+            'rememberMe':'',
+            'next':''
         },
         methods:{
             login:function(){
@@ -84,11 +86,16 @@
                 if(this.rememberMe== true){
                     check=1;
                 }
+                var nexturl ;
+                if(this.next!= null){
+                    nexturl=this.next;
+                }
 
                 var datas={
                     userName: this.username,
                     password: this.password,
-                    rememberMe:check
+                    rememberMe:check,
+                    next:nexturl
                 };
 
                 this.$http.post('/user/login',datas).then(function(response){
@@ -97,6 +104,7 @@
                     console.log("url"+response.data.data);
                     if(response.data.rspCode == 000000){
                         var url = response.data.data;
+
                         window.open(url, '_self');
                     }else{
                         $("#errorMsg").html(response.data.rspMsg);

@@ -2,21 +2,17 @@ package com.cxy.favourite.web;
 
 import com.cxy.favourite.common.aop.LogManage;
 import com.cxy.favourite.domain.HostHolder;
-import com.cxy.favourite.domain.News;
-import com.cxy.favourite.domain.ViewObject;
 import com.cxy.favourite.domain.view.NewsSummary;
 import com.cxy.favourite.jpa.UserRepository;
 import com.cxy.favourite.service.LookAroundService;
 import com.cxy.favourite.service.NewsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -104,4 +100,10 @@ public class IndexController extends BaseController {
 
     }
 
+    @RequestMapping(value = "relogin",method = RequestMethod.GET)
+    @LogManage(description = "跳转登录")
+    public String relogin(Model model,@RequestParam(value = "next",required = false)String next){
+        model.addAttribute("next",next);//login.html 埋进去
+         return "login";
+    }
 }

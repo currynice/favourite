@@ -1,8 +1,8 @@
 package com.cxy.favourite.configuration;
 
-import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
+import com.cxy.favourite.interceptor.LoginInterceptor;
 import com.cxy.favourite.interceptor.PassportInterceptor;
 import com.cxy.favourite.resolver.CurrentUserHandlerMethodArgumentResolver;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +35,8 @@ public class MyWebMvcConfig  implements WebMvcConfigurer {
     PassportInterceptor passportInterceptor;
     @Autowired
     CurrentUserHandlerMethodArgumentResolver userResolver;
-
+    @Autowired
+    LoginInterceptor loginInterceptor;
 //        @Override
 //	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 //		registry.addResourceHandler("/js/**").addResourceLocations("classpath:/js/");
@@ -51,8 +52,8 @@ public class MyWebMvcConfig  implements WebMvcConfigurer {
     @Override
     public  void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(passportInterceptor).addPathPatterns("/**")
-                .excludePathPatterns("/css/**","/img/**","/js/**","/login","/regist","/index","/media/**","/vendor/**");
-
+                .excludePathPatterns("/css/**","/img/**","/js/**","/login", "/regist","/index","/media/**","/vendor/**");
+    registry.addInterceptor(loginInterceptor).addPathPatterns("/feedback");//TODO
     }
 
     /**

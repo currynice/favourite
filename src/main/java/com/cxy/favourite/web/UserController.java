@@ -42,7 +42,9 @@ public class UserController extends BaseController{
     @ResponseBody
     @RequestMapping(value="/login",method = RequestMethod.POST)
     @LogManage(description = "登录")
-    public ResponseData login(User user, HttpServletResponse response,@RequestParam(value = "rememberMe",defaultValue ="0")Integer rememberMe){
+    public ResponseData login(User user, HttpServletResponse response,@RequestParam(value = "rememberMe",defaultValue ="0")Integer rememberMe,
+                              @RequestParam(value = "next",required =false)String next
+            ){
         try{
 
             User emailOrUserNameUser  = this.userRepository.findByUserNameOrEmail(user.getUserName(),user.getEmail());
@@ -65,7 +67,11 @@ public class UserController extends BaseController{
                 }
                  response.addCookie(cookie);
             }
-                String preUrl = "/";//TODO 记住上次浏览
+//            String preUrl = "/";//记住上次浏览,默认
+//                if(StringUtils.isNotBlank(next)){
+//                    preUrl = next;
+//                }
+            String preUrl = "/feedback";
                 return new ResponseData(ExceptionEnums.SUCCESS,preUrl);
         }catch (Exception e){
             logger.error("error in login"+e);
