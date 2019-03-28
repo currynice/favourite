@@ -58,8 +58,8 @@ public class UserController extends BaseController{
             if(ticket!=null){
                 Cookie cookie = new Cookie(Const.LOGIN_TICKET,ticket);
                 cookie.setPath("/");
-                // TODO 记住我
-                if(rememberMe.toString().equals("1")){
+                // 记住我remember==1 才设置，默认浏览器关闭失效
+                if(rememberMe.equals(1)){
                     cookie.setMaxAge(Const.COOKIE_TIMEOUT);
 
                 }
