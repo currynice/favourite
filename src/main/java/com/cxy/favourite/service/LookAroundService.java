@@ -81,7 +81,7 @@ public class LookAroundService {
 
         for(NewsView view:result){
             NewsSummary summary = new NewsSummary(view);
-            //TODO 判断当前用户是否赞了,默认没有
+            //TODO 判断当前用户是否赞了,默认没有  TODO
             summary.setPraise(false);
             summary.setCreatedDate(DateUtils.getTimeFormatText(view.getCreatedDate()));
             summaries.add(summary);
