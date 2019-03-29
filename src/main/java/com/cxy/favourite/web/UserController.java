@@ -14,6 +14,7 @@ import com.cxy.favourite.service.NewsService;
 import com.cxy.favourite.utils.DateUtils;
 import net.sf.oval.ConstraintViolation;
 import net.sf.oval.Validator;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -67,11 +68,11 @@ public class UserController extends BaseController{
                 }
                  response.addCookie(cookie);
             }
-//            String preUrl = "/";//记住上次浏览,默认
-//                if(StringUtils.isNotBlank(next)){
-//                    preUrl = next;
-//                }
-            String preUrl = "/feedback";
+            String preUrl = "/";//记住上次浏览,默认
+                if(StringUtils.isNotBlank(next)){
+                    preUrl = next;
+                }
+
                 return new ResponseData(ExceptionEnums.SUCCESS,preUrl);
         }catch (Exception e){
             logger.error("error in login"+e);

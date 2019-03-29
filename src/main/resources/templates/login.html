@@ -26,7 +26,7 @@
                 <p class="text-center pv">请登录</p>
                 <form id="form" data-parsley-validate="true" onsubmit="return false">
                     <div class="form-group has-feedback">
-                        <input type="hidden" name="next" th:value="${next}"/>
+                        <input type="hidden" v-model="next" th:if="${next!=null}" th:value="${next}"/>
                         <input type="text" placeholder="邮箱地址或昵称" v-model="username" class="form-control" data-parsley-error-message="请输入邮箱地址或昵称" required="required" />
                         <span class="fa fa-envelope form-control-feedback text-muted"></span>
                     </div>
@@ -90,6 +90,7 @@
                 if(this.next!= null){
                     nexturl=this.next;
                 }
+
 
                 var datas={
                     userName: this.username,
