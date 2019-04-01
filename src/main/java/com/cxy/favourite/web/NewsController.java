@@ -38,7 +38,7 @@ public class NewsController extends BaseController{
      * @param content
      * @return
      */
-    @RequestMapping(path = {"/user/addNews"}, method = {RequestMethod.POST})
+    @RequestMapping(path = {"/news/addNews"}, method = {RequestMethod.POST})
     @LogManage(description = "发布资讯")
     @ResponseBody
     public Response addNews(@RequestParam("image") String image,
@@ -69,7 +69,7 @@ public class NewsController extends BaseController{
      * @param content
      * @return
      */
-    @RequestMapping(path = {"/user/addComment"}, method = {RequestMethod.POST})
+    @RequestMapping(path = {"/news/addComment"}, method = {RequestMethod.POST})
     @LogManage(description = "发布评论")
     @ResponseBody
     public Response addComment(@RequestParam("newsId") Long newsId,
