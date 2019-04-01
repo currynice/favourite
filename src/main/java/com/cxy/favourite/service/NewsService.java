@@ -1,7 +1,6 @@
 package com.cxy.favourite.service;
 
 import com.cxy.favourite.domain.News;
-import com.cxy.favourite.domain.UserIsFollow;
 import com.cxy.favourite.domain.dto.PageChunk;
 import com.cxy.favourite.jpa.NewsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +9,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  *新闻Service
@@ -41,6 +38,8 @@ public class NewsService {
 
     //添加新闻
     public void  addNews(News news){
+        //html标签过滤
+
         newsRepository.save(news);
     }
 

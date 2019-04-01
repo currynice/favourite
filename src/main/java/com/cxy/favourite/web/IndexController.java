@@ -106,4 +106,17 @@ public class IndexController extends BaseController {
         model.addAttribute("next",next);//login.html 埋进去
          return "login";
     }
+
+    @RequestMapping(value="/newsRelease",method=RequestMethod.GET)
+    @LogManage(description="发布页面")
+    public String newsRelease(Model model) {
+//        List<News> favoritesList = favoritesRepository.findByUserIdOrderByLastModifyTimeDesc(getUserId());
+//        Config config = configRepository.findByUserId(getUserId());
+     //   List<String> followList = followRepository.findByUserId(getUserId());
+      //  logger.info("model：" + config.getDefaultModel());
+//        model.addAttribute("favoritesList",favoritesList);
+        model.addAttribute("configObj", "simple");
+      //  model.addAttribute("followList",followList);//关注列表 TODO
+        return "news/newsRelease";
+    }
 }

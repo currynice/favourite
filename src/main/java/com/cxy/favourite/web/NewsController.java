@@ -7,6 +7,7 @@ import com.cxy.favourite.domain.News;
 import com.cxy.favourite.domain.enums.EntityType;
 import com.cxy.favourite.domain.enums.ExceptionEnums;
 import com.cxy.favourite.domain.result.Response;
+import com.cxy.favourite.domain.result.ResponseData;
 import com.cxy.favourite.service.CommentService;
 import com.cxy.favourite.service.NewsService;
 import com.cxy.favourite.utils.DateUtils;
@@ -17,8 +18,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.HtmlUtils;
-
-import java.util.Date;
 
 /**
  *
@@ -45,17 +44,22 @@ public class NewsController extends BaseController{
                             @RequestParam("title") String title,
                             @RequestParam("content") String content) {
         try {
-            News news = new News();
-            news.setCreatedDate(DateUtils.getCurrentTime());
+             News news = new News();
+             Long time = DateUtils.getCurrentTime();
+            news.setCreatedDate(time);
             news.setTitle(title);
             news.setImage(image);
             news.setCommentCount(0);
             news.setLikeCount(0);
+            System.out.println(content);
             news.setContent(content);
-            news.setUserId(super.getUserId());
+            Long userId = super.getUserId();
+            System.out.println(userId);
+            news.setUserId(userId);
             newsService.addNews(news);
             //TODO
-            return super.result();
+            String url = "/lookAround";
+            return new ResponseData(ExceptionEnums.SUCCESS,url);
 
         } catch (Exception e) {
             logger.error("添加资讯失败" + e.getMessage());
