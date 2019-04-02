@@ -24,6 +24,7 @@
         </li>
         <li>
           <a href="/login" th:unless="${user != null}">登录</a>
+          <a href="/newsRelease" th:if="${user != null}">发布</a>
           <a href="/" th:if="${user != null}" th:text="${user.userName}" class="userName"></a>
         </li>
       </ul>
