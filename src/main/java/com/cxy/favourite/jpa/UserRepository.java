@@ -29,7 +29,8 @@ public interface UserRepository extends BaseRepository<User,Long> {
 
     User findByUserName(String userName);
 
-    User findByUserNameOrEmail(String username, String email);
+
+    User findByUserNameOrEmail(String userName, String email);
 
     User findByEmail(String email);
 
