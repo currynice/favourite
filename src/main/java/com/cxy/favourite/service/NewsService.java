@@ -9,6 +9,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.util.HtmlUtils;
 
 /**
  *新闻Service
@@ -17,6 +18,8 @@ import org.springframework.stereotype.Service;
 public class NewsService {
     @Autowired
     private NewsRepository newsRepository;
+    @Autowired
+    private SensitiveService sensitiveService;
 
     /**
      * 最新新闻(,个人首页:userId不为null)
@@ -38,8 +41,12 @@ public class NewsService {
 
     //添加新闻
     public void  addNews(News news){
-        //html标签过滤
-
+        //html标签过滤,转义保存
+        news.setContent(HtmlUtils.htmlEscape(news.getContent()));
+        news.setTitle(HtmlUtils.htmlEscape(news.getTitle()));
+        //敏感词过滤SensitiveService
+        news.setContent(sensitiveService.fliter(news.getContent()));
+        news.setTitle(sensitiveService.fliter(news.getTitle()));
         newsRepository.save(news);
     }
 
