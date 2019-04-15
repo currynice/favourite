@@ -75,6 +75,7 @@ public class PassportInterceptor implements HandlerInterceptor {
         }
 
     }
+    //TODO  RESOLVE 500 ERROR
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, @Nullable Exception ex) throws Exception {
                 hostHolder.clear();

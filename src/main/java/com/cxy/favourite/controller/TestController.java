@@ -136,23 +136,23 @@ private UserRepository userRepository;
     @LogManage(description = "specification测试")
     public void  specification() throws Exception{
 //        containsLike
-        Specification<User> specification1 = SpecificationFactory.containsLike("userName","cxy");
+//        Specification<User> specification1 = SpecificationFactory.containsLike("userName","cxy");
 //        List<User> thisuser = userRepository.findAll(specification1);
 //        System.out.println(thisuser);
 //        System.out.println(thisuser.size());
 
 
-        Specification<User> specification2 = SpecificationFactory.isBetween("createdTime",1552461355078L,1552461387898L);
+//        Specification<User> specification2 = SpecificationFactory.isBetween("createdTime",1552461355078L,1552461387898L);
 //        List<User> betweenUser =  userRepository.findAll(specification2);
 //        System.out.println(betweenUser);
 //        System.out.println(betweenUser.size());
         //以上都是单个条件查询的
 
         //复合查询也很简单,追加在后面就行 where().or()也能用用
-        Specification<User> specification3 = Specification.where(specification1).and(specification2);
-        List<User> result =userRepository.findAll(specification3);
-        System.out.println(result);
-        System.out.println(result.size());
+//        Specification<User> specification3 = Specification.where(specification1).and(specification2);
+//        List<User> result =userRepository.findAll(specification3);
+//        System.out.println(result);
+//        System.out.println(result.size());
 
 
     }
@@ -220,5 +220,14 @@ private UserRepository userRepository;
     }
 
 
+    /**
+     * 测试fstjson  convertor
+     *
+     */
+    @GetMapping("/convertor")
+    @ResponseBody
+    public Book tset(){
+       return new Book();
+    }
 
 }
