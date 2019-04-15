@@ -107,15 +107,15 @@ public interface UserRepository extends BaseRepository<User,Long> {
     /**这里增加了@QueryHints注解，是给查询添加一些额外的提示
      * 比如当前的name值为HINT_COMMENT是在查询的时候带上一些备注信息
      */
-    @QueryHints(value = { @QueryHint(name = HINT_COMMENT, value = "查询提示")})
-    @Query("select c from User c where c.userName=:name ")
-    Page<User> testhints2(@Param("name") String name2,Pageable pageable);
-
-    @QueryHints(value = { @QueryHint(name = HINT_COMMENT, value = "查询提示")})
-    @Query("select c from User c  ")
-    Page<User> testhints(Pageable pageable);
+//    @QueryHints(value = { @QueryHint(name = HINT_COMMENT, value = "查询提示")})
+//    @Query("select c from User c where c.userName=:name ")
+//    Page<User> testhints2(@Param("name") String name2,Pageable pageable);
+//
+//    @QueryHints(value = { @QueryHint(name = HINT_COMMENT, value = "查询提示")})
+//    @Query("select c from User c  ")
+//    Page<User> testhints(Pageable pageable);
 
     //TODO PROJECTION投影
-    @Query("select u.userName as userName ,u.email as email from User u")
-    Collection<UserProjection> findAllNameAndEmail();
+//    @Query("select u.userName as userName ,u.email as email from User u")
+//    Collection<UserProjection> findAllNameAndEmail();
 }

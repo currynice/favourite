@@ -3,6 +3,7 @@ package com.cxy.favourite.common.aop;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +21,7 @@ public class LoggerAspect {
 
 
     @Before("within(com.cxy..*) && @annotation(logManage)")
-    public void beforeMethod(JoinPoint joinPoint,LogManage logManage) {
+    public void beforeMethod(JoinPoint joinPoint, LogManage logManage) {
 
         logger.info("before method: " +logManage.description()+" 开始");
         logger.info(joinPoint.getSignature().toString());//对象

@@ -6,6 +6,8 @@ import com.cxy.favourite.interceptor.LoginInterceptor;
 import com.cxy.favourite.interceptor.PassportInterceptor;
 import com.cxy.favourite.resolver.CurrentUserHandlerMethodArgumentResolver;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -23,7 +25,7 @@ import java.util.List;
  * TODO 重写addResourceHandlers静态资源路径映射（如果必要的话）
  * 添加登录拦截器（验证token真实性，保存user至threadlocal）.
  */
-@Component//初始化
+@Configuration//初始化
 public class MyWebMvcConfig  implements WebMvcConfigurer {
     /**
      * 不用  @Autowired
@@ -31,12 +33,30 @@ public class MyWebMvcConfig  implements WebMvcConfigurer {
      * 这样就能在Spring映射这个拦截器前，把拦截器中的依赖注入的对象给初始化完成了
      * 避免对象为null
      */
-    @Autowired
-    PassportInterceptor passportInterceptor;
-    @Autowired
-    CurrentUserHandlerMethodArgumentResolver userResolver;
-    @Autowired
-    LoginInterceptor loginInterceptor;
+
+//    @Autowired
+//    PassportInterceptor passportInterceptor;
+//    @Autowired
+//    CurrentUserHandlerMethodArgumentResolver userResolver;
+//    @Autowired
+//    LoginInterceptor loginInterceptor;
+
+    @Bean
+    public PassportInterceptor passportInterceptor(){
+        return new PassportInterceptor();
+    }
+
+    @Bean
+    public CurrentUserHandlerMethodArgumentResolver userResolver(){
+        return new CurrentUserHandlerMethodArgumentResolver();
+    }
+
+    public LoginInterceptor loginInterceptor(){
+        return new LoginInterceptor();
+    }
+
+
+
 //        @Override
 //	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 //		registry.addResourceHandler("/js/**").addResourceLocations("classpath:/js/");
@@ -51,9 +71,9 @@ public class MyWebMvcConfig  implements WebMvcConfigurer {
 
     @Override
     public  void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(passportInterceptor).addPathPatterns("/**")
+        registry.addInterceptor(passportInterceptor()).addPathPatterns("/**")
                 .excludePathPatterns("/css/**","/img/**","/js/**","/login", "/regist","/index","/media/**","/vendor/**");
-    registry.addInterceptor(loginInterceptor).addPathPatterns("/feedback");//TODO
+    registry.addInterceptor(loginInterceptor()).addPathPatterns("/feedback");//TODO
     }
 
     /**
@@ -162,7 +182,7 @@ public class MyWebMvcConfig  implements WebMvcConfigurer {
      */
     @Override
 public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
-    resolvers.add(userResolver);
+    resolvers.add(userResolver());
 }
 
 

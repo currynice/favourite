@@ -117,20 +117,20 @@ private UserRepository userRepository;
      * //TODO wrong way
      * @return
      */
-    @RequestMapping(value = "/projections", method = RequestMethod.GET)
-    @LogManage(description = "测试投影使用")
-    public Map<String,Object> projection() throws Exception{
-        Map<String,Object> map = new HashMap<>();
-        Collection<UserProjection> projections = userRepository.findAllNameAndEmail();
-        System.out.println(projections);
-        System.out.println(projections.size());
-        for(UserProjection u:projections){
-            map.put("userName:",u.getUserName());
-            map.put("email:",u.getEmail());
-            map.put("information:",u.getInformation());
-        }
-        return map;
-    }
+//    @RequestMapping(value = "/projections", method = RequestMethod.GET)
+//    @LogManage(description = "测试投影使用")
+//    public Map<String,Object> projection() throws Exception{
+//        Map<String,Object> map = new HashMap<>();
+//        Collection<UserProjection> projections = userRepository.findAllNameAndEmail();
+//        System.out.println(projections);
+//        System.out.println(projections.size());
+//        for(UserProjection u:projections){
+//            map.put("userName:",u.getUserName());
+//            map.put("email:",u.getEmail());
+//            map.put("information:",u.getInformation());
+//        }
+//        return map;
+//    }
 
     @RequestMapping(value = "/specification", method = RequestMethod.GET)
     @LogManage(description = "specification测试")
