@@ -1,5 +1,6 @@
 package com.cxy.favourite.configuration;
 
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import com.cxy.favourite.interceptor.LoginInterceptor;
@@ -34,26 +35,26 @@ public class MyWebMvcConfig  implements WebMvcConfigurer {
      * 避免对象为null
      */
 
-//    @Autowired
-//    PassportInterceptor passportInterceptor;
-//    @Autowired
-//    CurrentUserHandlerMethodArgumentResolver userResolver;
-//    @Autowired
-//    LoginInterceptor loginInterceptor;
+    @Autowired
+    PassportInterceptor passportInterceptor;
+    @Autowired
+    CurrentUserHandlerMethodArgumentResolver userResolver;
+    @Autowired
+    LoginInterceptor loginInterceptor;
 
-    @Bean
-    public PassportInterceptor passportInterceptor(){
-        return new PassportInterceptor();
-    }
 
-    @Bean
-    public CurrentUserHandlerMethodArgumentResolver userResolver(){
-        return new CurrentUserHandlerMethodArgumentResolver();
-    }
-
-    public LoginInterceptor loginInterceptor(){
-        return new LoginInterceptor();
-    }
+//    public PassportInterceptor passportInterceptor(){
+//        return new PassportInterceptor();
+//    }
+//
+//
+//    public CurrentUserHandlerMethodArgumentResolver userResolver(){
+//        return new CurrentUserHandlerMethodArgumentResolver();
+//    }
+//
+//    public LoginInterceptor loginInterceptor(){
+//        return new LoginInterceptor();
+//    }
 
 
 
@@ -71,9 +72,9 @@ public class MyWebMvcConfig  implements WebMvcConfigurer {
 
     @Override
     public  void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(passportInterceptor()).addPathPatterns("/**")
+        registry.addInterceptor(passportInterceptor).addPathPatterns("/**")
                 .excludePathPatterns("/css/**","/img/**","/js/**","/login", "/regist","/index","/media/**","/vendor/**");
-    registry.addInterceptor(loginInterceptor()).addPathPatterns("/feedback");//TODO
+    registry.addInterceptor(loginInterceptor).addPathPatterns("/feedback");//TODO
     }
 
     /**
@@ -95,19 +96,19 @@ public class MyWebMvcConfig  implements WebMvcConfigurer {
          * WriteMapNullValue：是否输出值为null的字段,默认为false。
 
          */
-//        config.setSerializerFeatures(
-//                SerializerFeature.WriteMapNullValue, // 保留输出null的字段
-//                SerializerFeature.WriteNullStringAsEmpty, // String null -> ""
-//                SerializerFeature.WriteNullNumberAsZero  // Number null -> 0
-//
-//        );
+        config.setSerializerFeatures(
+                SerializerFeature.WriteMapNullValue, // 保留输出null的字段
+                SerializerFeature.WriteNullStringAsEmpty, // String null -> ""
+                SerializerFeature.WriteNullNumberAsZero  // Number null -> 0
+
+        );
 
 
 
        // config.setDateFormat("");
         // config.setDateFormat("yyyy-MM-dd HH:mm:ss");
 
-       // converter.setFastJsonConfig(config);//配置生效  TODO
+        converter.setFastJsonConfig(config);//配置生效  TODO
 
 
 
@@ -182,7 +183,7 @@ public class MyWebMvcConfig  implements WebMvcConfigurer {
      */
     @Override
 public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
-    resolvers.add(userResolver());
+    resolvers.add(userResolver);
 }
 
 
